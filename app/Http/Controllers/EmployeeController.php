@@ -168,22 +168,22 @@ class EmployeeController extends Controller
         }
         $employee->leaveTypes()->sync($arr);
 
-        //send message for password information and change password.
-        try {
-            Mail::to($request->official_email)->later($when, new EmailPasswordChange($employee_id));
-            Mail::to($request->personal_email)->later($when, new EmailPasswordChange($employee_id));
+        // //send message for password information and change password.
+        // try {
+        //     Mail::to($request->official_email)->later($when, new EmailPasswordChange($employee_id));
+        //     Mail::to($request->personal_email)->later($when, new EmailPasswordChange($employee_id));
 
-            Session::flash('success', 'Employee is created succesfully');
-        } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-        }
+        //     Session::flash('success', 'Employee is created succesfully');
+        // } catch (\Exception $e) {
+        //     Session::flash('error', $e->getMessage());
+        // }
 
-        //send policies email
-        try {
-            Mail::to($request->official_email)->later($when, new CompanyPoliciesMail());
-        } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-        }
+        // //send policies email
+        // try {
+        //     Mail::to($request->official_email)->later($when, new CompanyPoliciesMail());
+        // } catch (\Exception $e) {
+        //     Session::flash('error', $e->getMessage());
+        // }
 
         if ($request->manager) {
             $org_chart = new OrganizationHierarchy();
@@ -351,11 +351,11 @@ class EmployeeController extends Controller
 
             $when = Carbon::now()->addMinutes(10);
 
-            try {
-                Mail::to($request->official_email)->later($when, new UpdateAccount($employee->id, $request->password));
-            } catch (\Exception $e) {
-                Session::flash('error', $e->getMessage());
-            }
+            // try {
+            //     Mail::to($request->official_email)->later($when, new UpdateAccount($employee->id, $request->password));
+            // } catch (\Exception $e) {
+            //     Session::flash('error', $e->getMessage());
+            // }
 
             if ($employee->roles->count() > 0) {
                 $old_role = $employee->roles[0];
